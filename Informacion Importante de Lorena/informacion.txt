@@ -1,2 +1,6 @@
 Estas migraciones no las estoy usando porque no me generan la base de datos relacional... estoy usando el archivo sql...
 Att. Lorena Salas
+
+Instalacion de laravel collective 5.3 para la facilidad en las vistas
+
+	composer require "laravelcollective/html":"^5.3.0"
