@@ -10,7 +10,7 @@ class Producto extends Model
     protected $table = 'productos';
 
     protected $fillable = [
-        'nombre_producto', 'cantidad_producto', 'costo', 'tipoProductos_id'
+        'nombre_producto', 'cantidad_producto', 'costo', 'tipoProductos_id', 'marca_id'
     ];
 
     public $timestamps = false;
@@ -18,6 +18,11 @@ class Producto extends Model
     public function tipoProducto(){
         
         return $this->belongsTo('App\TipoProducto');
+    }
+
+    public function marca(){
+
+        return $this->belongsTo('App\Marca');
     }
 
     public function productosVentasDetalles(){

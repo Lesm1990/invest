@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content-pag')
-<div class="col m8 offset-m2 s12">
+<main>
+<div class="row container">
+  <div class="col m8 offset-m2 s12">
         <br>
         <form class="col s12" role="form" method="POST" action="{{ route('register') }}">
             {{ csrf_field() }}
@@ -71,4 +73,6 @@
         </form>
         <br>
     </div>
+</div>
+</main>
 @endsection
