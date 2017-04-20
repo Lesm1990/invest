@@ -10,7 +10,7 @@ class Compra extends Model
     protected $table = 'compras';
 
     protected $fillable = [
-        'proveedores_id', 'empleados_id'
+        'fecha_registro', 'fecha_factura', 'proveedores_id', 'empleados_id'
     ];
 
     public $timestamps = false;

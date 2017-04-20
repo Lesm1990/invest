@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content-pag')
+<main>
+<div class="row container">
     <div class="col m8 offset-m2 s12">
         <br>
         <form class="col s12" role="form" method="POST" action="{{ route('login') }}">
@@ -54,4 +56,6 @@
         </form>
         <br>
     </div>
+</div>
+</main>
 @endsection

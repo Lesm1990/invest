@@ -118,11 +118,7 @@
 	</nav>
 </header>
 
-
-
-<div class="row container">
 	@yield('content-pag')
-</div>
 <br>	
 
 <footer class="page-footer">
@@ -154,7 +150,14 @@
 	
 	$( document ).ready(function(){
 		$(".button-collapse").sideNav();	
+		$('.datepicker').pickadate({
+		    selectMonths: true, // Creates a dropdown to control month
+		    selectYears: 15 // Creates a dropdown of 15 years to control year
+		});
 	})
 </script>
+
+@yield('script')
+
 </body>
 </html>
