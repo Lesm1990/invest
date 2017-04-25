@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Proveedor;
 
 class ProveedorController extends Controller
 {
@@ -24,6 +25,11 @@ class ProveedorController extends Controller
     public function create()
     {
         //
+        $proveedores = Proveedor::all();
+
+        return view('proveedores.create', [
+            'proveedores' => $proveedores
+            ]);
     }
 
     /**
@@ -35,6 +41,27 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         //
+
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+            'RIF' => 'required',
+            'telefono' => 'required',
+            'email' => 'required',
+        ]);
+
+        $model = new Proveedor();
+        $model->nombre = $request['nombre'];
+        $model->rif = $request['RIF'];
+        $model->telefono = $request['telefono'];
+        $model->email = $request['email'];
+        $model->save();
+
+        $proveedores = Proveedor::all();
+
+        return view('proveedores.create', [
+            'proveedores' => $proveedores
+            ]);
+
     }
 
     /**
@@ -45,7 +72,7 @@ class ProveedorController extends Controller
      */
     public function show($id)
     {
-        //
+        //No se usa
     }
 
     /**
@@ -57,6 +84,19 @@ class ProveedorController extends Controller
     public function edit($id)
     {
         //
+        $proveedores = Proveedor::all();
+        $proveedor = Proveedor::find($id);
+
+        $selectP = array();
+
+        foreach($proveedores as $p) {
+            $selectP[$p->id] = $p->nombre;
+        }
+
+        return view('proveedores.edit', [
+            'proveedores' => $selectP,
+            'proveedor' => $proveedor
+            ]);
     }
 
     /**
@@ -69,6 +109,33 @@ class ProveedorController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+            'RIF' => 'required',
+            'telefono' => 'required',
+            'email' => 'required',
+        ]);
+
+        $model = Proveedor::find($id);
+        $model->nombre = $request['nombre'];
+        $model->rif = $request['RIF'];
+        $model->telefono = $request['telefono'];
+        $model->email = $request['email'];
+        $model->save();
+
+        $proveedores = Proveedor::all();
+        $proveedor = Proveedor::find($id);
+
+        $selectP = array();
+
+        foreach($proveedores as $p) {
+            $selectP[$p->id] = $p->nombre;
+        }
+
+        return view('proveedores.edit', [
+            'proveedores' => $selectP,
+            'proveedor' => $proveedor
+            ]);
     }
 
     /**
@@ -80,5 +147,13 @@ class ProveedorController extends Controller
     public function destroy($id)
     {
         //
+        $proveedor = Proveedor::find($id);
+        $proveedor->delete();
+
+        $proveedores = Proveedor::all();
+
+        return view('proveedores.create', [
+            'proveedores' => $proveedores
+            ]);
     }
 }

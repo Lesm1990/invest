@@ -10,14 +10,14 @@ class Proveedor extends Model
     protected $table = 'proveedores';
 
     protected $fillable = [
-        'rif', 'nombre', 'user_id'
+        'rif', 'nombre', 'telefono', 'email', 'user_id'
     ];
 
     public $timestamps = false;
 
     public function user(){
 
-    	return $this->belongsTo('App\User');
+    	return $this->belongsTo('App\User', 'user_id');
     }
 
     public function compras(){

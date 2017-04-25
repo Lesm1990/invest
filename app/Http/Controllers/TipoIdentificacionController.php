@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TipoIdentificacion;
 
 class TipoIdentificacionController extends Controller
 {
@@ -13,7 +14,7 @@ class TipoIdentificacionController extends Controller
      */
     public function index()
     {
-        //
+        //No se usa
     }
 
     /**
@@ -24,6 +25,11 @@ class TipoIdentificacionController extends Controller
     public function create()
     {
         //
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        return view('tipoIdentificacion.create', [
+            'tipoIdentificaciones' => $tipoIdentificaciones
+            ]);
     }
 
     /**
@@ -35,6 +41,20 @@ class TipoIdentificacionController extends Controller
     public function store(Request $request)
     {
         //
+         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+        ]);
+
+        $model = new TipoIdentificacion();
+        $model->descripcion = $request['nombre'];
+        $model->save();
+
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        return view('tipoIdentificacion.create', [
+            'tipoIdentificaciones' => $tipoIdentificaciones
+            ]);
     }
 
     /**
@@ -45,7 +65,7 @@ class TipoIdentificacionController extends Controller
      */
     public function show($id)
     {
-        //
+        //No se usa
     }
 
     /**
@@ -57,6 +77,19 @@ class TipoIdentificacionController extends Controller
     public function edit($id)
     {
         //
+        $tipoIdentificacion = TipoIdentificacion::find($id);
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        $selectTI = array();
+
+        foreach($tipoIdentificaciones as $ti) {
+            $selectTI[$ti->id] = $ti->descripcion;
+        }
+
+        return view('tipoIdentificacion.edit', [
+            'tipoIdentificaciones' => $selectTI,
+            'tipoIdentificacion' => $tipoIdentificacion
+            ]);
     }
 
     /**
@@ -69,6 +102,29 @@ class TipoIdentificacionController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+        ]);
+
+        $model = TipoIdentificacion::find($id);
+        $model->descripcion = $request['nombre'];
+        $model->save();
+
+        $tipoIdentificacion = TipoIdentificacion::find($id);
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        $selectTI = array();
+
+        foreach($tipoIdentificaciones as $ti) {
+            $selectTI[$ti->id] = $ti->descripcion;
+        }
+
+        return view('tipoIdentificacion.edit', [
+            'tipoIdentificaciones' => $selectTI,
+            'tipoIdentificacion' => $tipoIdentificacion
+            ]);
+
     }
 
     /**
@@ -80,5 +136,14 @@ class TipoIdentificacionController extends Controller
     public function destroy($id)
     {
         //
+        $tipoIdentificacion = TipoIdentificacion::find($id);
+        $tipoIdentificacion->delete();
+
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        return view('tipoIdentificacion.create', [
+            'tipoIdentificaciones' => $tipoIdentificaciones
+            ]);
+        
     }
 }

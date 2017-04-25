@@ -23,20 +23,22 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::resource('clientes', 'ClienteController');
+Route::resource('clientes', 'ClienteController', ['except' => ['index', 'show']]);
 
 Route::resource('compras', 'CompraController');
 
-Route::resource('empleados', 'EmpleadoController');
+Route::resource('empleados', 'EmpleadoController', ['except' => ['index', 'show']]);
 
-Route::resource('productos', 'ProductoController');
+Route::resource('productos', 'ProductoController', ['except' => ['index', 'show']]);
 
-Route::resource('proveedores', 'ProveedorController');
+Route::resource('proveedores', 'ProveedorController', ['except' => ['index', 'show']]);
 
-Route::resource('tipoIdentificacion', 'TipoIdentificacionController');
+Route::resource('tipoIdentificacion', 'TipoIdentificacionController', ['except' => ['index', 'show']]);
 
-Route::resource('tipoProducto', 'TipoProductoController');
+Route::resource('tipoProducto', 'TipoProductoController', ['except' => ['index', 'show']]);
 
-Route::resource('valoresAgregados', 'ValoresAgregadoController');
+Route::resource('valoresAgregados', 'ValoresAgregadoController', ['except' => ['index', 'show']]);
 
 Route::resource('ventas', 'VentaController');
+
+Route::resource('marcas', 'MarcaController', ['except' => ['index', 'show']]);

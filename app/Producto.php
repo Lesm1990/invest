@@ -17,12 +17,12 @@ class Producto extends Model
 
     public function tipoProducto(){
         
-        return $this->belongsTo('App\TipoProducto');
+        return $this->belongsTo('App\TipoProducto', 'tipoProductos_id');
     }
 
     public function marca(){
 
-        return $this->belongsTo('App\Marca');
+        return $this->belongsTo('App\Marca', 'marca_id');
     }
 
     public function productosVentasDetalles(){
