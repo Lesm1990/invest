@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TipoProducto;
 
 class TipoProductoController extends Controller
 {
@@ -13,7 +14,7 @@ class TipoProductoController extends Controller
      */
     public function index()
     {
-        //
+        //No se usa
     }
 
     /**
@@ -24,6 +25,11 @@ class TipoProductoController extends Controller
     public function create()
     {
         //
+        $tipoproductos = TipoProducto::all();
+
+        return view('tipoProducto.create', [
+            'tipoproductos' => $tipoproductos
+            ]);
     }
 
     /**
@@ -35,6 +41,19 @@ class TipoProductoController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+        ]);
+
+        $model = new TipoProducto();
+        $model->descripcion = $request['nombre'];
+        $model->save();
+
+        $tipoproductos = TipoProducto::all();
+
+        return view('tipoProducto.create', [
+            'tipoproductos' => $tipoproductos
+            ]);
     }
 
     /**
@@ -45,7 +64,7 @@ class TipoProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        //No se usa
     }
 
     /**
@@ -57,6 +76,19 @@ class TipoProductoController extends Controller
     public function edit($id)
     {
         //
+        $tipoProducto = TipoProducto::find($id);
+        $tipoProductos = TipoProducto::all();
+
+        $selectTP = array();
+
+        foreach($tipoProductos as $tp) {
+            $selectTP[$tp->id] = $tp->descripcion;
+        }
+
+        return view('tipoProducto.edit',[
+            'tipoProducto' => $tipoProducto,
+            'tipoProductos' => $selectTP
+            ]);
     }
 
     /**
@@ -69,6 +101,27 @@ class TipoProductoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+        ]);
+
+        $model = TipoProducto::find($id);
+        $model->descripcion = $request['nombre'];
+        $model->save();
+
+        $tipoProducto = TipoProducto::find($id);
+        $tipoProductos = TipoProducto::all();
+
+        $selectTP = array();
+
+        foreach($tipoProductos as $tp) {
+            $selectTP[$tp->id] = $tp->descripcion;
+        }
+
+        return view('tipoProducto.edit',[
+            'tipoProducto' => $tipoProducto,
+            'tipoProductos' => $selectTP
+            ]);
     }
 
     /**
@@ -80,5 +133,13 @@ class TipoProductoController extends Controller
     public function destroy($id)
     {
         //
+        $tipoProducto = TipoProducto::find($id);
+        $tipoProducto->delete();
+        
+        $tipoproductos = TipoProducto::all();
+
+        return view('tipoProducto.create', [
+            'tipoproductos' => $tipoproductos
+            ]);
     }
 }

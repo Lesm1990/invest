@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>INVEST</title>
-
+ 	
     <!-- Styles -->
 	<link rel="stylesheet" href="{{ url('/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ url('/css/materialize.min.css') }}">
 	<link rel="stylesheet" href="{{ url('/css/style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url('/DataTables/datatables.min.css') }}"/>
 
 	<!-- Scripts -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="{{ url('/js/materialize.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url('/DataTables/datatables.min.js') }}"></script>
+
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -25,7 +29,10 @@
     </script>
 
 </head>
+
 <body>
+
+@yield('style')
 
 <header>
 	<nav>
@@ -144,18 +151,7 @@
             <a class="grey-text text-lighten-4 right" href="#!">www.google.co.ve</a>
             </div>
           </div>
-        </footer>
-
-<script>
-	
-	$( document ).ready(function(){
-		$(".button-collapse").sideNav();	
-		$('.datepicker').pickadate({
-		    selectMonths: true, // Creates a dropdown to control month
-		    selectYears: 15 // Creates a dropdown of 15 years to control year
-		});
-	})
-</script>
+</footer>
 
 @yield('script')
 

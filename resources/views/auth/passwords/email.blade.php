@@ -42,3 +42,12 @@
 </div>
 </main>
 @endsection
+
+@section('script')
+<script>
+    
+    $( document ).ready(function(){
+        $(".button-collapse").sideNav();    
+    })
+</script>
+@endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ValoresAgregado;
 
 class ValoresAgregadoController extends Controller
 {
@@ -13,7 +14,7 @@ class ValoresAgregadoController extends Controller
      */
     public function index()
     {
-        //
+        //No se usa
     }
 
     /**
@@ -24,6 +25,11 @@ class ValoresAgregadoController extends Controller
     public function create()
     {
         //
+        $valoresAgregados = ValoresAgregado::all();
+
+        return view('valoresAgregados.create', [
+            'valoresAgregados' => $valoresAgregados
+            ]);
     }
 
     /**
@@ -35,6 +41,21 @@ class ValoresAgregadoController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+            'porcentaje' => 'required|max:255',
+        ]);
+
+        $model = new ValoresAgregado();
+        $model->descripcion = $request['nombre'];
+        $model->valor = $request['porcentaje'];
+        $model->save();
+
+        $valoresAgregados = ValoresAgregado::all();
+
+        return view('valoresAgregados.create', [
+            'valoresAgregados' => $valoresAgregados
+            ]);
     }
 
     /**
@@ -45,7 +66,7 @@ class ValoresAgregadoController extends Controller
      */
     public function show($id)
     {
-        //
+        //No se usa
     }
 
     /**
@@ -57,6 +78,19 @@ class ValoresAgregadoController extends Controller
     public function edit($id)
     {
         //
+        $valoresAgregado = ValoresAgregado::find($id);
+        $valoresAgregados = ValoresAgregado::all();
+
+        $selectVA = array();
+
+        foreach($valoresAgregados as $va) {
+            $selectVA[$va->id] = $va->descripcion;
+        }
+
+        return view('valoresAgregados.edit', [
+            'valoresAgregados' => $selectVA,
+            'valoresAgregado' => $valoresAgregado
+            ]);
     }
 
     /**
@@ -69,6 +103,29 @@ class ValoresAgregadoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+            'porcentaje' => 'required|max:255',
+        ]);
+
+        $model = ValoresAgregado::find($id);
+        $model->descripcion = $request['nombre'];
+        $model->valor = $request['porcentaje'];
+        $model->save();
+
+        $valoresAgregado = ValoresAgregado::find($id);
+        $valoresAgregados = ValoresAgregado::all();
+
+        $selectVA = array();
+
+        foreach($valoresAgregados as $va) {
+            $selectVA[$va->id] = $va->descripcion;
+        }
+
+        return view('valoresAgregados.edit', [
+            'valoresAgregados' => $selectVA,
+            'valoresAgregado' => $valoresAgregado
+            ]);
     }
 
     /**
@@ -80,5 +137,13 @@ class ValoresAgregadoController extends Controller
     public function destroy($id)
     {
         //
+        $valoresAgregado = ValoresAgregado::find($id);
+        $valoresAgregado->delete();
+
+        $valoresAgregados = ValoresAgregado::all();
+
+        return view('valoresAgregados.create', [
+            'valoresAgregados' => $valoresAgregados
+            ]);
     }
 }

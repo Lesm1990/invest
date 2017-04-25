@@ -15,7 +15,7 @@ class TipoProducto extends Model
 
     public $timestamps = false;
 
-    public function tipoProductos(){
+    public function productos(){
 
     	return $this->hasMany('App\Producto', 'tipoProductos_id');
     }

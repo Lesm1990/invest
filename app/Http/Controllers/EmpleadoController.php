@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Empleado;
+use App\TipoIdentificacion;
 
 class EmpleadoController extends Controller
 {
@@ -13,7 +15,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        //
+        //No se usa
     }
 
     /**
@@ -24,6 +26,20 @@ class EmpleadoController extends Controller
     public function create()
     {
         //
+        $empleados = Empleado::all();
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        $selectTI = array();
+
+        foreach($tipoIdentificaciones as $ti) {
+            $selectTI[$ti->id] = $ti->descripcion;
+        }
+
+
+        return view('empleados.create', [
+            'empleados' => $empleados,
+            'tipoIdentificaciones' => $selectTI,
+            ]);
     }
 
     /**
@@ -35,6 +51,40 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+            'tipoIDN' => 'required',
+            'documento' => 'required',
+            'apellido' => 'required|max:255',
+            'telefono' => 'required',
+            'email' => 'required',
+            'direccion' => 'required|max:255',
+        ]);
+
+        $model = new Empleado();
+        $model->nombre = $request['nombre'];
+        $model->apellido = $request['apellido'];
+        $model->direccion = $request['direccion'];
+        $model->telefono = $request['telefono'];
+        $model->email = $request['email'];
+        $model->identificacion = $request['documento'];
+        $model->tipoIdentificacion_id = $request['tipoIDN'];
+        $model->save();
+
+        $empleados = Empleado::all();
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        $selectTI = array();
+
+        foreach($tipoIdentificaciones as $ti) {
+            $selectTI[$ti->id] = $ti->descripcion;
+        }
+
+
+        return view('empleados.create', [
+            'empleados' => $empleados,
+            'tipoIdentificaciones' => $selectTI,
+            ]);
     }
 
     /**
@@ -45,7 +95,7 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
-        //
+        //No se usa
     }
 
     /**
@@ -57,6 +107,20 @@ class EmpleadoController extends Controller
     public function edit($id)
     {
         //
+        $empleado = Empleado::find($id);
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        $selectTI = array();
+
+        foreach($tipoIdentificaciones as $ti) {
+            $selectTI[$ti->id] = $ti->descripcion;
+        }
+
+
+        return view('empleados.edit', [
+            'empleado' => $empleado,
+            'tipoIdentificaciones' => $selectTI,
+            ]);
     }
 
     /**
@@ -69,6 +133,40 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'nombre' => 'required|max:255',
+            'tipoIDN' => 'required',
+            'documento' => 'required',
+            'apellido' => 'required|max:255',
+            'telefono' => 'required',
+            'email' => 'required',
+            'direccion' => 'required|max:255',
+        ]);
+
+        $model = Empleado::find($id);
+        $model->nombre = $request['nombre'];
+        $model->apellido = $request['apellido'];
+        $model->direccion = $request['direccion'];
+        $model->telefono = $request['telefono'];
+        $model->email = $request['email'];
+        $model->identificacion = $request['documento'];
+        $model->tipoIdentificacion_id = $request['tipoIDN'];
+        $model->save();
+
+        $empleado = Empleado::find($id);
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        $selectTI = array();
+
+        foreach($tipoIdentificaciones as $ti) {
+            $selectTI[$ti->id] = $ti->descripcion;
+        }
+
+
+        return view('empleados.edit', [
+            'empleado' => $empleado,
+            'tipoIdentificaciones' => $selectTI,
+            ]);
     }
 
     /**
@@ -80,5 +178,22 @@ class EmpleadoController extends Controller
     public function destroy($id)
     {
         //
+        $empleado = Empleado::find($id);
+        $empleado->delete();
+
+        $empleados = Empleado::all();
+        $tipoIdentificaciones = TipoIdentificacion::all();
+
+        $selectTI = array();
+
+        foreach($tipoIdentificaciones as $ti) {
+            $selectTI[$ti->id] = $ti->descripcion;
+        }
+
+
+        return view('empleados.create', [
+            'empleados' => $empleados,
+            'tipoIdentificaciones' => $selectTI,
+            ]);
     }
 }

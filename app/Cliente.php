@@ -10,19 +10,19 @@ class Cliente extends Model
     protected $table = 'clientes';
 
     protected $fillable = [
-        'nombre', 'apellido', 'direccion', 'telefono', 'num_identificacion', 'tipoIdentificacion_id', 'user_id'
+        'nombre', 'apellido', 'direccion', 'telefono', 'email', 'num_identificacion', 'tipoIdentificacion_id', 'user_id'
     ];
 
     public $timestamps = false;
 
     public function tipoidentificacion(){
         
-        return $this->belongsTo('App\TipoIdentificacion');
+        return $this->belongsTo('App\TipoIdentificacion', 'tipoIdentificacion_id');
     }
 
     public function user(){
         
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     public function ventas(){

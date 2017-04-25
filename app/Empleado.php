@@ -10,19 +10,19 @@ class Empleado extends Model
     protected $table = 'empleados';
 
     protected $fillable = [
-        'nombre', 'apellido', 'direccion', 'telefono', 'identificacion', 'tipoIdentificacion_id', 'user_id'
+        'nombre', 'apellido', 'direccion', 'telefono', 'email', 'identificacion', 'tipoIdentificacion_id', 'user_id'
     ];
 
     public $timestamps = false;
 
     public function tipoIdentificacion(){
         
-        return $this->belongsTo('App\TipoIdentificacion');
+        return $this->belongsTo('App\TipoIdentificacion', 'tipoIdentificacion_id');
     }
 
     public function user(){
         
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     public function ventas(){
